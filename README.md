@@ -16,6 +16,7 @@ After cloning the repo, you can either firstly install all the python dependenci
 
 ```sh
 $ pip install -r requirements.txt --user
+Hola
 ```
 Or you can install directly the library with only the mandatory dependencies (if you performed the previous step, you still need to perform this step):
 
