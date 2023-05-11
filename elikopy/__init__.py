@@ -16,4 +16,4 @@ except ImportError as e:
     elikopy.modelSynb0Disco = None
     print("Synb0Disco module not available: {}".format(e))
     
-__version__ = "version_MD"
+__version__ = "version_fork_ajour"
