@@ -231,7 +231,7 @@ def preproc_solo(folder_path, p, reslice=False, reslice_addSlice=False, denoisin
             b0_mask, affine, voxel_size = load_nifti(b0_mask_path, return_voxsize=True)
             mask, _ = load_nifti(mask_path)
 
-        data = gibbs_removal(b0_mask, num_threads=core_count)
+        data = gibbs_removal(b0_mask, num_processes=core_count)
         corrected_path = folder_path + '/subjects/' + patient_path + "/dMRI/preproc/gibbs/" + patient_path + '_gibbscorrected.nii.gz'
         save_nifti(corrected_path, data.astype(np.float32), affine)
 
@@ -1672,7 +1672,7 @@ def white_mask_solo(folder_path, p, maskType, corr_gibbs=True, core_count=1, deb
                 "%d.%b %Y %H:%M:%S") + ": Beginning of gibbs for patient %s \n" % p)
 
             data_gibbs, affine_gibbs = load_nifti(anat_path)
-            data_gibbs = gibbs_removal(data_gibbs,num_threads=core_count)
+            data_gibbs = gibbs_removal(data_gibbs,num_processes=core_count)
             corrected_gibbs_path = folder_path + '/subjects/' + patient_path + "/T1/" + patient_path + '_T1_gibbscorrected.nii.gz'
             save_nifti(corrected_gibbs_path, data_gibbs.astype(np.float32), affine_gibbs)
 
@@ -2813,7 +2813,7 @@ def mf_solo(folder_path, p, dictionary_path, core_count=1, maskType="brain_mask_
 
     if len(frac_list) > 0 and len(peaks_list) > 0 and len(fvf_list)>0:
         RGB_peaks_frac_fvf = unravel.utils.peaks_to_RGB(peaks_list, frac_list, fvf_list, order=color_order)
-        save_nifti(mf_path + '/' + patient_path + filename+'_peak_tot_RGB_frac_fvf.nii.gz', RGB_peaks_frac_fvf, img_mf_frac.affine, order=color_order)
+        save_nifti(mf_path + '/' + patient_path + filename+'_peak_tot_RGB_frac_fvf.nii.gz', RGB_peaks_frac_fvf, img_mf_frac.affine)
 
     print("[" + log_prefix + "] " + datetime.datetime.now().strftime(
         "%d.%b %Y %H:%M:%S") + ": Starting quality control %s \n" % p)
