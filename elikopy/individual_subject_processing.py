@@ -3294,9 +3294,9 @@ def ivim_solo(folder_path, p, core_count=1, G1Ball_2_lambda_iso=7e-9, G1Ball_1_l
 
     # fix the isotropic diffusivity
     ivim_mod.set_fixed_parameter(
-        'G1Ball_2_lambda_iso', G1Ball_2_lambda_iso)  # Following Gurney-Champion 2016
+        'G1Ball_2_lambda_iso', G1Ball_2_lambda_iso)  # Following Gurney-Champion 2016 -> Blood compartment
     ivim_mod.set_parameter_optimization_bounds(
-        'G1Ball_1_lambda_iso', G1Ball_1_lambda_iso)  # Following Gurney-Champion 2016
+        'G1Ball_1_lambda_iso', G1Ball_1_lambda_iso)  # Following Gurney-Champion 2016 -> Diffusion compartment
 
     # load the data
     data, affine = load_nifti(
@@ -3333,8 +3333,9 @@ def ivim_solo(folder_path, p, core_count=1, G1Ball_2_lambda_iso=7e-9, G1Ball_1_l
     fitted_parameters = ivim_fit_Dfixed.fitted_parameters
 
     D_diffBall = fitted_parameters["G1Ball_1_lambda_iso"] # DiffusionBall diffusitivy
-    f_BloodBall = fitted_parameters["partial_volume_0"] # BloodBall fraction
-    f_DiffusionBall = fitted_parameters["partial_volume_1"] # DiffusionBall fraction
+    f_DiffusionBall = fitted_parameters["partial_volume_0"] # DiffusionBall fraction
+    f_BloodBall = fitted_parameters["partial_volume_1"] # BloodBall fraction
+    
     mse = ivim_fit_Dfixed.mean_squared_error(data)
     R2 = ivim_fit_Dfixed.R2_coefficient_of_determination(data)
 
